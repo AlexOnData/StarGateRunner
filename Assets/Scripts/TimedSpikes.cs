@@ -12,10 +12,16 @@ public class TimedSpikes : MonoBehaviour
     public Collider damageCollider;
     public GameObject visual;
 
+    [Header("Animation")]
+    public float transitionDuration = 0.3f;
+    public float hiddenYOffset = -0.5f;
+
     [Header("Audio")]
     public AudioSource activateAudio;
 
     bool isActive = false;
+    Vector3 visualUpPosition;
+    Vector3 visualDownPosition;
 
     void Reset()
     {
@@ -25,7 +31,16 @@ public class TimedSpikes : MonoBehaviour
 
     void Start()
     {
-        SetActiveState(false);
+        if (visual != null)
+        {
+            visualUpPosition = visual.transform.localPosition;
+            visualDownPosition = visualUpPosition + Vector3.up * hiddenYOffset;
+            visual.transform.localPosition = visualDownPosition;
+        }
+
+        if (damageCollider != null) damageCollider.enabled = false;
+        isActive = false;
+
         StartCoroutine(CycleRoutine());
     }
 
@@ -35,23 +50,53 @@ public class TimedSpikes : MonoBehaviour
 
         while (true)
         {
-            SetActiveState(false);
             yield return new WaitForSeconds(inactiveTime);
 
-            SetActiveState(true);
+            // Rise
+            if (activateAudio != null) activateAudio.Play();
+            yield return AnimateVisual(visualDownPosition, visualUpPosition);
+            isActive = true;
+            if (damageCollider != null) damageCollider.enabled = true;
+
             yield return new WaitForSeconds(activeTime);
+
+            // Lower
+            isActive = false;
+            if (damageCollider != null) damageCollider.enabled = false;
+            yield return AnimateVisual(visualUpPosition, visualDownPosition);
         }
     }
 
-    void SetActiveState(bool value)
+    IEnumerator AnimateVisual(Vector3 from, Vector3 to)
     {
-        isActive = value;
-        if (damageCollider != null) damageCollider.enabled = value;
-        if (visual != null) visual.SetActive(value);
-        if (value && activateAudio != null) activateAudio.Play();
+        if (visual == null || transitionDuration <= 0f)
+        {
+            if (visual != null) visual.transform.localPosition = to;
+            yield break;
+        }
+
+        float t = 0f;
+        while (t < transitionDuration)
+        {
+            t += Time.deltaTime;
+            float p = Mathf.Clamp01(t / transitionDuration);
+            visual.transform.localPosition = Vector3.Lerp(from, to, p);
+            yield return null;
+        }
+        visual.transform.localPosition = to;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        TryDamage(other);
     }
 
     void OnTriggerStay(Collider other)
+    {
+        TryDamage(other);
+    }
+
+    void TryDamage(Collider other)
     {
         if (!isActive) return;
         if (!other.CompareTag("Player")) return;

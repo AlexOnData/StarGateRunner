@@ -125,5 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c45659edb3363428b84a89224ca2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StarCollectible
-  collectClip: {fileID: 0}
-  rotationSpeed: 90
+  collectClip: {fileID: 8300000, guid: ccf50fb583708d242b9db0b5fa6cf9b4, type: 3}
+  rotationSpeed: 135

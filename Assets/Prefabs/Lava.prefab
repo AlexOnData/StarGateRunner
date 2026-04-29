@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 114215000798487929}
   - component: {fileID: 7778457663799961889}
   - component: {fileID: 5774698231360968866}
+  - component: {fileID: -718580600415188752}
   m_Layer: 0
   m_Name: Lava
   m_TagString: Hazard
@@ -112,3 +113,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-718580600415188752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5042425258818547508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a174f5cdd31cd9943b66a3e8d496189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LavaDamage

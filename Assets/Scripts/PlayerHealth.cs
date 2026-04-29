@@ -31,6 +31,10 @@ public class PlayerHealth : MonoBehaviour
 
         if (uiManager == null) uiManager = FindFirstObjectByType<UIManager>();
         if (uiManager != null) uiManager.UpdateLives(currentLives);
+
+        // Lock cursor when entering gameplay (defensive — also done by MainMenu transitions).
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void TakeDamage()

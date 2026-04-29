@@ -49,6 +49,11 @@ public class LevelExit : MonoBehaviour
 
         transitioning = true;
         Time.timeScale = 1f;
+
+        // Unlock cursor on transition; gameplay scenes re-lock via PlayerHealth.Start().
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         SceneManager.LoadScene(nextSceneName);
     }
 }

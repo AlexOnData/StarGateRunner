@@ -10,12 +10,14 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1f;
+        LockCursorForGameplay();
         SceneManager.LoadScene(firstLevelScene);
     }
 
     public void RestartCurrentLevel()
     {
         Time.timeScale = 1f;
+        LockCursorForGameplay();
         Scene active = SceneManager.GetActiveScene();
         SceneManager.LoadScene(active.name);
     }
@@ -23,6 +25,7 @@ public class MainMenu : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;
+        UnlockCursorForUI();
         SceneManager.LoadScene(mainMenuScene);
     }
 
@@ -33,5 +36,17 @@ public class MainMenu : MonoBehaviour
 #else
         Application.Quit();
 #endif
+    }
+
+    static void LockCursorForGameplay()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    static void UnlockCursorForUI()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

@@ -1,7 +1,7 @@
 # Documentatie proiect — Star Gate Runner
 
 **Disciplina:** Dezvoltarea jocurilor pe calculator
-**Autor:** Marcean Alex
+**Autor:** AlexOnData
 **Tehnologie:** Unity 6 (6000.4.4f1) + Universal Render Pipeline + C#
 **Data predare:** 2026-05-05
 
